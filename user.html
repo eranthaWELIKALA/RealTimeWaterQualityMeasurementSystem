@@ -74,6 +74,15 @@ img{
 				<div class="col-md-1">:</div>
 				<div class="col-md-4">
 					<input class="form-control" type="text" v-model="w_quality" placeholder="ex : temperature">
+					<!-- <input class="form-control" type="text" v-model="w_quality" placeholder="ex : temperature"> -->
+					<select v-model="qSelected" class="form-control">
+						<option disabled>Select the Quality</option>
+						<option>Temperature</option>
+						<option>pH</option>
+						<option>Conductivity</option>
+						<option>Turbidity</option>
+						<option>All</option>
+					</select>
 				</div>
 			</div>
 			<div class="row">
@@ -99,9 +108,9 @@ img{
 		</div>
 		<div class="col-md-6" style="background-color: lightyellow;min-height:500px;"><br>
 			<h3>Display Area</h3>
-			<button class="btn btn-primary" v-on:click="wq_url" >{{w_quality}}</button> <input class="checkbox" type="checkbox" v-model="w_quality_status" disabled> <br><br>
-			<button class="btn btn-primary" v-on:click="date_url" >{{date}}</button> <input class="checkbox" type="checkbox" v-model="date_status" disabled> <br><br>
-			<button class="btn btn-primary" v-on:click="position_url" >{{position}}</button> <input class="checkbox" type="checkbox" v-model="position_status" disabled>
+			<button class="btn btn-primary" v-on:click="wq_url" >{{qSelected}}</button> <br><br>
+			<button class="btn btn-primary" v-on:click="date_url" >{{date}}</button> <br><br>
+			<button class="btn btn-primary" v-on:click="position_url" >{{position}}</button> 
 			<button class="btn btn-primary" v-on:click="get_request_url">View</button>
 		</div>
 
@@ -134,7 +143,7 @@ img{
 		var one = new Vue({
 			el : '#one',
 			data : {
-				w_quality : "",
+				qSelected : "",
 				w_quality_url : "",
 				date : "",
 				date_url : "",
@@ -149,22 +158,15 @@ img{
 			},
 			methods:{
 			wq_url : function(){
-				this.w_quality_url = this.source+this.w_quality+this.back;
-				if(this.w_quality_status==true){
-					window.location.href = this.w_quality_url;
-				}
+				this.w_quality_url = this.source+this.qSelected+this.back;
+				window.location.href = this.w_quality_url;
 			},
 			date_url : function(){
 				this.date_url = this.source+this.date;
-				if(this.date_status==true){
-					window.location.href = this.date_url;
-				}
+				window.location.href = this.date_url;
 			},
 			position_url : function(){
 				this.position_url = this.source+this.position;
-				if(this.position_url==true){
-					window.location.href = this.position_url;
-				}
 			},
 			get_request_url : function(){
 				if(this.w_quality_status){
@@ -176,6 +178,10 @@ img{
 				if(this.position_status){
 					this.get_request = this.get_request+"position="+this.position+"&";
 				}
+				this.get_request = this.get_request+"w_quality="+this.qSelected+"&";
+				this.get_request = this.get_request+"date="+this.date+"&";
+				this.get_request = this.get_request+"position="+this.position+"&";
+				
 				//this.get_request = "localhost/User/view.php?w_quality="+this.w_quality+"&date="+this.date+"&position"+this.position;
 				window.location.href = this.get_request;
 			},
