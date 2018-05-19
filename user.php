@@ -5,6 +5,7 @@
 	$data_retrieve_query = "SELECT * FROM users WHERE email='".$_SESSION["email"]."'";
 	$is_data_retrieve_query_run = mysqli_query($connect,$data_retrieve_query);
 	$data_execute = mysqli_fetch_assoc($is_data_retrieve_query_run);
+	$_SESSION["lastname"]=$data_execute["Lastname"];
 ?>
 <html lang="en">
 <head>

@@ -10,14 +10,19 @@
 	$positions_execute = mysqli_fetch_assoc($is_positions_query_run);
 	$readings_query = "SELECT * FROM readings WHERE PositionID='".$positions_execute["ID"]."'AND Date='".$date."'";
 	$is_readings_query_run = mysqli_query($connect,$readings_query);
-	$reading_execute = mysqli_fetch_assoc($is_readings_query_run);
-	$dateForJS = str_replace("-",",",$date);
-	echo $dateForJS;
 
+	while($reading_execute = mysqli_fetch_assoc($is_readings_query_run)){
+		 $dataPoints1[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Temperature"]);
+		 $dataPoints2[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["pH"]);
+		 $dataPoints3[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Turbidity"]);
+		 $dataPoints4[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Conductivity"]);
+	}
+	
 ?>
 <html lang="en">
 <head>
-	<title>ABC</title>
+	<title><?php session_start();
+				 echo $_SESSION['lastname']." Viewing";?></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -44,182 +49,121 @@
 </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <script>
+<script>
 window.onload = function () {
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	title: {
-		text: "Conductivity"
-	},
-	axisX: {
-		/*minimum: new Date(2015, 01, 25 00:00),
-		maximum: new Date(2015, 01, 25 23:59),*/
-		valueFormatString: "HH mm"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			<?php
-			while($reading_execute = mysqli_fetch_assoc($is_readings_query_run)){
-				echo "{ x: new Date(2015,01-25 00 00), y: 74.4, label: 'Q1-2015' },";
-			}
-			?>
-			// { x: new Date(2015,01-02), y: 74.4, label: "Q1-2015" },
-			/*{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }*/
-		]
-	}]
-});
-chart.render();
+ 
 var chart1 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
-	title: {
+	//theme: "light2",
+	title:{
 		text: "Temperature"
 	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
 	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
+	axisY:{
+		title: "Celsius ( C )",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
 	},
 	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
 		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
+		dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "pH"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "pH",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+var chart3 = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "Turbidity"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "Units",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+var chart4 = new CanvasJS.Chart("chartContainer4", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "Conductivity"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "Units",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>
 	}]
 });
 chart1.render();
-var chart2 = new CanvasJS.Chart("chartContainer2", {
-	animationEnabled: true,
-	title: {
-		text: "Turbidity"
-	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
-	}]
-});
 chart2.render();
-var chart3 = new CanvasJS.Chart("chartContainer3", {
-	animationEnabled: true,
-	title: {
-		text: "pH"
-	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
-	}]
-});
-chart3.render();
+chart3.render(); 
+chart4.render();
 }
 </script>
 
@@ -242,51 +186,41 @@ chart3.render();
 	<br>
 	<div style="float:left;width:10%;background-color: grey;min-height:468px;"></div>
 	<div style="float:right;width:90%;">
-		<div class="container" style="height: 105px;background-color: white;">
-		<div class="row">
-			<div class="col-md-6">
-				<table class="table table-inverted">
-					<h3>Conductivity</h3>
-					<tbody>
-						<tr>
-							<td>01-02-2018</td><td>Peradeniya</td><td>555.0</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="col-md-6">
-				<div id="chartContainer" style="height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;"></div>
-			</div>
-		</div>
-	</div>
-	<br>
-	<div class="container" style="height: 105px;background-color: white;">
+		<div class="container" style="min-height: 105px;background-color: white;">
 		<div class="row">
 			<div class="col-md-6">
 				<table class="table table-inverted">
 					<h3>Temperature</h3>
 					<tbody>
-						<tr>
-							<td>01-02-2018</td><td>Peradeniya</td><td>555.0</td>
-						</tr>
+							<?php
+
+							// echo "<pre>"; 
+							foreach ($dataPoints1 as $data) {
+								echo "<tr><td>".$date."</td><td>".$position."</td><td>".$data['label']."</td><td>".$data['y']."</td></tr>";
+							}
+							 ?>						
 					</tbody>
 				</table>
 			</div>
 			<div class="col-md-6">
-				<div id="chartContainer1" style="height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;"></div>
+				<div id="chartContainer1" style="min-height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;"></div>
 			</div>
 		</div>
 	</div>
 	<br>
-	<div class="container" style="height: 105px;background-color: white;">
+	<div class="container" style="min-height: 105px;background-color: white;">
 		<div class="row">
 			<div class="col-md-6">
 				<table class="table table-inverted">
-					<h3>Turbidity</h3>
+					<h3>pH</h3>
 					<tbody>
-						<tr>
-							<td>01-02-2018</td><td>Peradeniya</td><td>555.0</td>
-						</tr>
+						<?php
+
+							// echo "<pre>"; 
+							foreach ($dataPoints2 as $data) {
+								echo "<tr><td>".$date."</td><td>".$position."</td><td>".$data['label']."</td><td>".$data['y']."</td></tr>";
+							}
+							 ?>
 					</tbody>
 				</table>
 			</div>
@@ -296,20 +230,46 @@ chart3.render();
 		</div>
 	</div>
 	<br>
-	<div class="container" style="height: 105px;background-color: white;">
+	<div class="container" style="min-height: 105px;background-color: white;">
 		<div class="row">
 			<div class="col-md-6">
 				<table class="table table-inverted">
-					<h3>pH Value</h3>
+					<h3>Turbidity</h3>
 					<tbody>
-						<tr>
-							<td>01-02-2018</td><td>Peradeniya</td><td>555.0</td>
-						</tr>
+						<?php
+
+							// echo "<pre>"; 
+							foreach ($dataPoints3 as $data) {
+								echo "<tr><td>".$date."</td><td>".$position."</td><td>".$data['label']."</td><td>".$data['y']."</td></tr>";
+							}
+							 ?>
 					</tbody>
 				</table>
 			</div>
 			<div class="col-md-6">
 				<div id="chartContainer3" style="height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;"></div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="container" style="min-height: 105px;background-color: white;">
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-inverted">
+					<h3>Conductivity</h3>
+					<tbody>
+						<?php
+
+							// echo "<pre>"; 
+							foreach ($dataPoints4 as $data) {
+								echo "<tr><td>".$date."</td><td>".$position."</td><td>".$data['label']."</td><td>".$data['y']."</td></tr>";
+							}
+							 ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<div id="chartContainer4" style="height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;"></div>
 			</div>
 		</div>
 	</div>

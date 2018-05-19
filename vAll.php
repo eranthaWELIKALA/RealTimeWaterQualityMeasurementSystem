@@ -10,35 +10,13 @@
 	$positions_execute = mysqli_fetch_assoc($is_positions_query_run);
 	$readings_query = "SELECT * FROM readings WHERE PositionID='".$positions_execute["ID"]."'AND Date='".$date."'";
 	$is_readings_query_run = mysqli_query($connect,$readings_query);
-	$reading_execute = mysqli_fetch_assoc($is_readings_query_run);
-	$dateForJS = str_replace("-",",",$date);
-	echo $dateForJS;
 
-?>
-<?php
- 
-$dataPoints = array(
-	array("label"=> 1997, "y"=> 254722.1),
-	array("label"=> 1998, "y"=> 292175.1),
-	array("label"=> 1999, "y"=> 369565),
-	array("label"=> 2000, "y"=> 284918.9),
-	array("label"=> 2001, "y"=> 325574.7),
-	array("label"=> 2002, "y"=> 254689.8),
-	array("label"=> 2003, "y"=> 303909),
-	array("label"=> 2004, "y"=> 335092.9),
-	array("label"=> 2005, "y"=> 408128),
-	array("label"=> 2006, "y"=> 300992.2),
-	array("label"=> 2007, "y"=> 401911.5),
-	array("label"=> 2008, "y"=> 299009.2),
-	array("label"=> 2009, "y"=> 319814.4),
-	array("label"=> 2010, "y"=> 357303.9),
-	array("label"=> 2011, "y"=> 353838.9),
-	array("label"=> 2012, "y"=> 288386.5),
-	array("label"=> 2013, "y"=> 485058.4),
-	array("label"=> 2014, "y"=> 326794.4),
-	array("label"=> 2015, "y"=> 483812.3),
-	array("label"=> 2016, "y"=> 254484)
-);
+	while($reading_execute = mysqli_fetch_assoc($is_readings_query_run)){
+		 $dataPoints1[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Temperature"]);
+		 $dataPoints2[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["pH"]);
+		 $dataPoints3[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Turbidity"]);
+		 $dataPoints4[] = array("label"=>$reading_execute["Time"],"y"=>$reading_execute["Conductivity"]);
+	}
 	
 ?>
 <html lang="en">
@@ -72,11 +50,11 @@ $dataPoints = array(
 <script>
 window.onload = function () {
  
-var chart = new CanvasJS.Chart("chartContainer", {
+var chart1 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
 	//theme: "light2",
 	title:{
-		text: "Salmon Production - 1997 to 2006"
+		text: "Temperature"
 	},
 	axisX:{
 		crosshair: {
@@ -85,7 +63,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		}
 	},
 	axisY:{
-		title: "in Metric Tons",
+		title: "Celsius ( C )",
 		crosshair: {
 			enabled: true,
 			snapToDataPoint: true
@@ -96,19 +74,105 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	data: [{
 		type: "area",
-		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+		dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
 	}]
 });
-chart.render();
- 
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "pH"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "pH",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+var chart3 = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "Turbidity"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "Units",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+var chart4 = new CanvasJS.Chart("chartContainer4", {
+	animationEnabled: true,
+	//theme: "light2",
+	title:{
+		text: "Conductivity"
+	},
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY:{
+		title: "Units",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
+	},
+	data: [{
+		type: "area",
+		dataPoints: <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+chart1.render();
+chart2.render();
+chart3.render(); 
+chart4.render();
 }
 </script>
    
 </head>
 <body>
-	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-	<div class="container">
+	<div id="chartContainer1" style="height: 100px; width: 100%;"></div>
+	<div id="chartContainer2" style="height: 100px; width: 100%;"></div>
+	<div id="chartContainer3" style="height: 100px; width: 100%;"></div>
+	<div id="chartContainer4" style="height: 100px; width: 100%;"></div>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<!-- <div class="container">
 		<div class="row" v-align="middle">
 			<div class="col-md-4 col-sm-4">
 				<img src="images/logo.png" alt="IMG" height="100" width="100" align="right">
@@ -196,7 +260,7 @@ chart.render();
 			</div>
 		</div>
 	</div>
-	</div>
+	</div> -->
 	<div><br>
 		<?php
 echo "
