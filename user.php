@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+	require "connect.php";
+	session_start();
+	$data_retrieve_query = "SELECT * FROM users WHERE email='".$_SESSION["email"]."'";
+	$is_data_retrieve_query_run = mysqli_query($connect,$data_retrieve_query);
+	$data_execute = mysqli_fetch_assoc($is_data_retrieve_query_run);
+?>
 <html lang="en">
 <head>
 	<title>ABC</title>
@@ -24,9 +31,6 @@
 <style>
 img{
 	border-radius: 50%;
-}
-.green{
-	background-color: green;
 }
 </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -58,8 +62,8 @@ img{
 						</div>
 						<div class="col-md-4 col-sm-4">
 							<div class="user_name">
-								<label>ABC</label><br>
-								Any Body Can
+								<label><h4><b><?php echo $data_execute["Lastname"]; ?></b></h4></label><br>
+								<?php echo $data_execute["Firtsname"]." ".$data_execute["Lastname"]; ?>
 							</div>
 						</div>
 					</div>
@@ -147,7 +151,7 @@ img{
 				qSelected : "",
 				date : "",
 				position : "",
-				get_request : "http://localhost/User/view.php?"
+				get_request : "http://localhost/User/viewAll.php?"
 			},
 			methods:{
 			wq_url : function(){

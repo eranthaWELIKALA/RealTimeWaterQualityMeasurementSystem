@@ -15,6 +15,32 @@
 	echo $dateForJS;
 
 ?>
+<?php
+ 
+$dataPoints = array(
+	array("label"=> 1997, "y"=> 254722.1),
+	array("label"=> 1998, "y"=> 292175.1),
+	array("label"=> 1999, "y"=> 369565),
+	array("label"=> 2000, "y"=> 284918.9),
+	array("label"=> 2001, "y"=> 325574.7),
+	array("label"=> 2002, "y"=> 254689.8),
+	array("label"=> 2003, "y"=> 303909),
+	array("label"=> 2004, "y"=> 335092.9),
+	array("label"=> 2005, "y"=> 408128),
+	array("label"=> 2006, "y"=> 300992.2),
+	array("label"=> 2007, "y"=> 401911.5),
+	array("label"=> 2008, "y"=> 299009.2),
+	array("label"=> 2009, "y"=> 319814.4),
+	array("label"=> 2010, "y"=> 357303.9),
+	array("label"=> 2011, "y"=> 353838.9),
+	array("label"=> 2012, "y"=> 288386.5),
+	array("label"=> 2013, "y"=> 485058.4),
+	array("label"=> 2014, "y"=> 326794.4),
+	array("label"=> 2015, "y"=> 483812.3),
+	array("label"=> 2016, "y"=> 254484)
+);
+	
+?>
 <html lang="en">
 <head>
 	<title>ABC</title>
@@ -43,188 +69,45 @@
 }*/
 </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script>
+<script>
 window.onload = function () {
-
+ 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
-	title: {
-		text: "Conductivity"
+	//theme: "light2",
+	title:{
+		text: "Salmon Production - 1997 to 2006"
 	},
-	axisX: {
-		/*minimum: new Date(2015, 01, 25 00:00),
-		maximum: new Date(2015, 01, 25 23:59),*/
-		valueFormatString: "HH mm"
+	axisX:{
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
 	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
+	axisY:{
+		title: "in Metric Tons",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	toolTip:{
+		enabled: false
 	},
 	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
 		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			<?php
-			while($reading_execute = mysqli_fetch_assoc($is_readings_query_run)){
-				echo "{ x: new Date(2015,01-25 00 00), y: 74.4, label: 'Q1-2015' },";
-			}
-			?>
-			// { x: new Date(2015,01-02), y: 74.4, label: "Q1-2015" },
-			/*{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }*/
-		]
+		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
 	}]
 });
 chart.render();
-var chart1 = new CanvasJS.Chart("chartContainer1", {
-	animationEnabled: true,
-	title: {
-		text: "Temperature"
-	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
-	}]
-});
-chart1.render();
-var chart2 = new CanvasJS.Chart("chartContainer2", {
-	animationEnabled: true,
-	title: {
-		text: "Turbidity"
-	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
-	}]
-});
-chart2.render();
-var chart3 = new CanvasJS.Chart("chartContainer3", {
-	animationEnabled: true,
-	title: {
-		text: "pH"
-	},
-	axisX: {
-		minimum: new Date(2015, 01, 25),
-		maximum: new Date(2019, 02, 15),
-		valueFormatString: "MMM YY"
-	},
-	axisY: {
-		title: "Quality",
-		titleFontColor: "#4F81BC",
-		suffix: "mn"
-	},
-	data: [{
-		indexLabelFontColor: "darkSlateGray",
-		name: "views",
-		type: "area",
-		yValueFormatString: "#,##0.0mn",
-		dataPoints: [
-			{ x: new Date(2015, 02, 1), y: 74.4, label: "Q1-2015" },
-			{ x: new Date(2015, 05, 1), y: 61.1, label: "Q2-2015" },
-			{ x: new Date(2015, 08, 1), y: 47.0, label: "Q3-2015" },
-			{ x: new Date(2015, 11, 1), y: 48.0, label: "Q4-2015" },
-			{ x: new Date(2016, 02, 1), y: 74.8, label: "Q1-2016" },
-			{ x: new Date(2016, 05, 1), y: 51.1, label: "Q2-2016" },
-			{ x: new Date(2016, 08, 1), y: 40.4, label: "Q3-2016" },
-			{ x: new Date(2016, 11, 1), y: 45.5, label: "Q4-2016" },
-			{ x: new Date(2017, 02, 1), y: 74.4, label: "Q1-2017" },
-			{ x: new Date(2017, 05, 1), y: 61.1, label: "Q2-2017" },
-			{ x: new Date(2017, 08, 1), y: 47.0, label: "Q3-2017" },
-			{ x: new Date(2017, 11, 1), y: 48.0, label: "Q4-2017" },
-			{ x: new Date(2018, 02, 1), y: 74.8, label: "Q1-2018" },
-			{ x: new Date(2018, 05, 1), y: 51.1, label: "Q2-2018" },
-			{ x: new Date(2018, 08, 1), y: 40.4, label: "Q3-2018" },
-			{ x: new Date(2018, 11, 1), y: 45.5, label: "Q4-2018" },
-			{ x: new Date(2019, 02, 1), y: 78.3, label: "Q1-2019", indexLabel: "Highest", markerColor: "red" }
-		]
-	}]
-});
-chart3.render();
+ 
 }
 </script>
-
+   
 </head>
 <body>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<div class="container">
 		<div class="row" v-align="middle">
 			<div class="col-md-4 col-sm-4">

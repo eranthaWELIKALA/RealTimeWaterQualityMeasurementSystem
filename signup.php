@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+	require "connect.php";
+		if(isset($_POST['done'])){
+			//$connect=mysqli_connect('localhost','root','','rtwqms');
+			$update_query = "INSERT INTO `users` (`Firtsname`, `Lastname`, `Email`, `UserID`, `Password`, `ContactNumber`) VALUES ('".$_POST['firstname']."', '".$_POST['lastname']."', '".$_POST['email']."', NULL, '".$_POST['pass']."', '".$_POST['contact']."')";
+			$is_update_query_run = mysqli_query($connect,$update_query);
+			header("location:login.php");
+		}
+	?>
 <html lang="en">
 <head>
 	<title>Sign Up</title>
@@ -52,7 +61,7 @@ img{
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/img-01.png" alt="IMG">
 				</div>
-				<form class="login100-form validate-form" method="post" action="temp.php">
+				<form class="login100-form validate-form" method="post" action="signup.php">
 					<span class="login100-form-title">
 						Member Signup
 					</span>
@@ -95,11 +104,11 @@ img{
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<input type="submit" name="done" value="Signup" class="login100-form-btn"> <!-- class="login100-form-btn" type="submit" name="done"> 
 							signup
-						</button>
+						</button>-->
 					</div>
-						<div class="text-center p-t-136">
+						<div class="text-center p-t-12">
 						<a class="txt2" href="login.php">
 							Back
 							<i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
@@ -110,6 +119,7 @@ img{
 			</div>
 		</div>
 	</div>
+	
 	
 	
 
