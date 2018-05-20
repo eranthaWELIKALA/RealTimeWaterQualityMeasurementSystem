@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+session_start();
+session_destroy();
+require "connect.php";
+	if(isset($_POST["login"])){
+		$data_check_query = "SELECT Password FROM users WHERE Email='".$_POST['email']."'";
+		$is_data_check_query_run = mysqli_query($connect,$data_check_query);
+		$data_execute = mysqli_fetch_assoc($is_data_check_query_run);
+		if($data_execute["Password"]==md5($_POST["pass"])){
+			session_start();
+			$_SESSION["email"]=$_POST["email"];
+			header("location:user.php");
+		}
+	}
+?>
 <html lang="en">
 <head>
 	<title>Login</title>
@@ -27,16 +42,25 @@ img{
 </style>
 </head>
 <body>
+	<div class="container">
+		<div class="row" v-align="middle">
+			<div class="col-md-4 col-sm-4">
+				<img src="images/logo.png" alt="IMG" height="100" width="100" align="right">
+			</div>
+			<div class="col-md-6 col-sm-8">
+				<h4 align="center">Real Time Water Quality Measurement System</h4>
+			</div>
+		</div>
+	</div>
 	
 	<div class="limiter">
 		<div class="container-login100">
-		<h3><b>Real Time Water Quality Measurement System</b></h3>
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form"  method="post" action="user.php">
+				<form class="login100-form validate-form"  method="post" action="index.php">
 					<span class="login100-form-title">
 						Member Login
 					</span>
@@ -58,7 +82,7 @@ img{
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit" name="login">
 							Login
 						</button>
 					</div>
@@ -69,11 +93,8 @@ img{
 						</span>
 						<a class="txt2" href="#">
 							Username / Password?
-						</a>
-					</div>
-
-					<div class="text-center p-t-136">
-						<a class="txt2" href="#">
+						</a><br>
+						<a class="txt2" href="signup.php">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>

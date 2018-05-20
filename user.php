@@ -9,7 +9,7 @@
 ?>
 <html lang="en">
 <head>
-	<title>ABC</title>
+	<title><?php echo "Welcome ".$data_execute['Lastname'];?></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -59,7 +59,12 @@ img{
 					<div class="row" align>
 						<div class="col-md-6 col-sm-6"></div>
 						<div class="col-md-2 col-sm-2">
-							<img src="images/user.png" alt="IMG" alt="IMG" height="60" width="60">
+							<div class="dropdown">
+							  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><img src="images/user.png" alt="IMG" alt="IMG" height="60" width="60"></button>
+							  <ul class="dropdown-menu">
+							    <li><a href="index.php">Log Out</a></li>
+							  </ul>
+							</div>
 						</div>
 						<div class="col-md-4 col-sm-4">
 							<div class="user_name">
@@ -151,21 +156,25 @@ img{
 			data : {
 				qSelected : "",
 				date : "",
+				currentDate : new Date(),
 				position : "",
+				quality_get_request : "http://localhost/User/quality.php?",
+				date_get_request : "http://localhost/User/date.php?",
+				position_get_request : "http://localhost/User/position.php?",
 				get_request : "http://localhost/User/viewAll.php?"
 			},
 			methods:{
 			wq_url : function(){
-				this.get_request = this.get_request+"w_quality="+this.qSelected+"&date=&position=";
-				window.location.href = this.get_request;
+				this.quality_get_request = this.quality_get_request+"w_quality="+this.qSelected+"&date="+this.currentDate+"&position=";
+				window.location.href = this.quality_get_request;
 			},
 			date_url : function(){
-				this.get_request = this.get_request+"w_quality=&date="+this.date+"&position=";
-				window.location.href = this.get_request;
+				this.date_get_request = this.date_get_request+"date="+this.date;
+				window.location.href = this.date_get_request;
 			},
 			position_url : function(){
-				this.get_request = this.get_request+"w_quality=&date=&position="+this.position;
-				window.location.href = this.get_request;
+				this.position_get_request = this.position_get_request+"date="+this.currentDate+"&position="+this.position;
+				window.location.href = this.position_get_request;
 			},
 			get_request_url : function(){
 				this.get_request = this.get_request+"w_quality="+this.qSelected+"&date="+this.date+"&position="+this.position;

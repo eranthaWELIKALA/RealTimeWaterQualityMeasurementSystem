@@ -249,11 +249,17 @@ chart.render();
 		<div class="container-login100">
 
 	<br>
+	<div style='float:left;width:10%;background-color: grey;height:768px'>
+					<br><br>
+					
+					<a class='btn btn-warning' style='width:100%;' href="user.php"><b><i class='fa fa-long-arrow-left m-l-5' aria-hidden='true'></i>Back</b></a>
+					<br><br><br><br>
+					<a class='btn btn-warning' style='width:100%;' href='index.php'><b>Logout</b></a>
+				</div>
 <?php
 if($status){
 	if($all){
-		echo	"<div style='float:left;width:10%;background-color: grey;min-height:468px;'></div>
-				<div style='float:right;width:90%;'>
+		echo	"<div style='float:right;width:90%;'>
 					<div class='container' style='min-height: 105px;background-color: white;'>
 						<div class='row'>
 							<div class='col-md-6'>
@@ -375,7 +381,7 @@ if($status){
 	}
 }
 else{
-	echo "<label align='center'>".$message1."<br>".$message2."</label>";
+	echo "<div style='float:right;width:90%;'><h2 align='center'>".$message1."<br>".$message2."</h2></div>";
 }
 ?>
 		</div>

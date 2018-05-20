@@ -109,7 +109,7 @@ img{
 						</button>-->
 					</div>
 						<div class="text-center p-t-12">
-						<a class="txt2" href="login.php">
+						<a class="txt2" href="index.php">
 							Back
 							<i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
 						</a>
