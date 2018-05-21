@@ -158,10 +158,10 @@ img{
 				date : "",
 				currentDate : new Date(),
 				position : "",
-				quality_get_request : "http://localhost/User/quality.php?",
-				date_get_request : "http://localhost/User/date.php?",
-				position_get_request : "http://localhost/User/position.php?",
-				get_request : "http://localhost/User/viewAll.php?"
+				quality_get_request : "http://localhost/RTWQMS/quality.php?",
+				date_get_request : "http://localhost/RTWQMS/date.php?",
+				position_get_request : "http://localhost/RTWQMS/position.php?",
+				get_request : "http://localhost/RTWQMS/viewAll.php?"
 			},
 			methods:{
 			wq_url : function(){

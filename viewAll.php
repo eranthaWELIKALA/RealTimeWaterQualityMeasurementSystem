@@ -346,8 +346,7 @@ if($status){
 		</iframe>";
 	}
 	else{
-		echo	"<div style='float:left;width:10%;background-color: grey;min-height:468px;'></div>
-				<div style='float:right;width:90%;'>
+		echo	"<div style='float:right;width:90%;'>
 					<div class='container' style='min-height: 105px;background-color: white;'>
 						<div class='row'>
 							<div class='col-md-6'>
@@ -410,7 +409,7 @@ else{
 	<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-	<script>
+	<!-- <script>
 		function myMap() {
 		var mapOptions = {
 		    center: new google.maps.LatLng(51.5, -0.12),
@@ -420,6 +419,6 @@ else{
 		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 		}
 	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
 </body>
 </html>

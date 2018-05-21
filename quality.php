@@ -134,7 +134,10 @@ chart1.render();
 			<div class='col-md-6'>
 				<div id='chartContainer1' style='min-height: 100px; max-width: 100%; margin: 0px auto; float:right; width:75%;'></div>
 			</div>
-	<iframe 
+			</div>
+		</div>
+	</div>
+	<?php echo "<iframe 
 	   width='600' 
 	   height='350' 
 	   frameborder='0' 
@@ -143,7 +146,7 @@ chart1.render();
 	   marginwidth='0' 
 	   src='http://maps.google.com/maps?f=q=colombo&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=".$positions_execute["Latitude"].",".$positions_execute["Longitude"].
 	   "(custom heading)&amp;output=embed'>
-	</iframe>
+	</iframe>";?>
 		</div>
 	</div>
 
@@ -170,7 +173,7 @@ chart1.render();
 	<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-	<script>
+	<!-- <script>
 		function myMap() {
 		var mapOptions = {
 		    center: new google.maps.LatLng(51.5, -0.12),
@@ -180,6 +183,6 @@ chart1.render();
 		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 		}
 	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
 </body>
 </html>

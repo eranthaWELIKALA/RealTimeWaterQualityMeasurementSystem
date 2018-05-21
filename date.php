@@ -5,10 +5,11 @@
 	$status = true ;
 	$message1 = "";
 
-	$positions_query = "SELECT * FROM positions WHERE Position='1'";
+	$positions_query = "SELECT * FROM positions WHERE ID='1'";
 	$is_positions_query_run = mysqli_query($connect,$positions_query);
 	$positions_execute = mysqli_fetch_assoc($is_positions_query_run);
-	$readings_query = "SELECT * FROM readings WHERE Date='".$date."'";
+	//echo $positions_execute["Latitude"];
+	$readings_query = "SELECT * FROM readings WHERE Date='".$date."' AND PositionID='1'";
 	$is_readings_query_run = mysqli_query($connect,$readings_query);
 	if (mysqli_num_rows($is_readings_query_run)!=0){
 		while($reading_execute = mysqli_fetch_assoc($is_readings_query_run)){
@@ -314,7 +315,7 @@ else{
 	<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-	<script>
+	<!-- <script>
 		function myMap() {
 		var mapOptions = {
 		    center: new google.maps.LatLng(51.5, -0.12),
@@ -324,6 +325,6 @@ else{
 		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 		}
 	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
 </body>
 </html>
